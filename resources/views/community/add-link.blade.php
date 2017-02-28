@@ -12,9 +12,8 @@
                             <option selected disabled>Pick a Channel...</option>
                             @foreach ($channels as $channel)
                                 <option
-                                    value="{{ $channel->id }}"
-                                    {{ old('channel_id') == $channel->id ? 'selected' : ''}}
-                                >
+                                  value="{{ $channel->id }}"
+                                  {{ old('channel_id') == $channel->id ? 'selected' : ''}}>
                                     {{ $channel->title }}
                                 </option>
                             @endforeach

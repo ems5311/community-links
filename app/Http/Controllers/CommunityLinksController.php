@@ -26,7 +26,7 @@ class CommunityLinksController extends Controller
         $this->validate($request, [
             'channel_id' => 'required|exists:channels,id',
             'title' => 'required',
-            'link' => 'required|active_url|unique:community_links',
+            'link' => 'required|active_url',
         ]);
 
         // Three ways to add the user ID to the $request object
