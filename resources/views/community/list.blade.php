@@ -2,6 +2,9 @@
     @if (count($links))
         @foreach ($links as $link)
             <li class="list-group-item">
+                @if (Auth::check() && Auth::user()->votedFor($link))
+                    +1
+                @endif
 
                 {{-- This span should be clickable --}}
                 {{--<a href="http://"></a>--}}
