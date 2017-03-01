@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Exceptions\CommunityLinkAlreadySubmitted;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -45,9 +46,16 @@ class CommunityLink extends Model
         return $link;
     }
 
+    /**
+     * Scope the query to records from a particular channel
+     *
+     * @param Builder $builder
+     * @param Channel $channel
+     * @return Builder
+     */
     public function scopeForChannel($builder, $channel)
     {
-        if ($channel->id)
+        if ($channel->exists)
         {
             return $builder->where('channel_id', $channel->id);
         }
@@ -117,7 +125,7 @@ class CommunityLink extends Model
      * Determine if the link has already been submitted.
      *
      * @param string $link
-     * @return mixed
+     * @return static
      */
     protected function hasAlreadyBeenSubmitted($link)
     {
