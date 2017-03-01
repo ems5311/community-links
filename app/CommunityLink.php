@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Exceptions\CommunityLinkAlreadySubmitted;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -49,6 +50,7 @@ class CommunityLink extends Model
      *
      * @param $attributes
      * @return bool
+     * @throws CommunityLinkAlreadySubmitted
      */
     public function contribute($attributes)
     {
@@ -56,7 +58,14 @@ class CommunityLink extends Model
         if ($existing = $this->hasAlreadyBeenSubmitted($attributes['link']))
         {
             // Update the timestamp to the current time
-            return $existing->touch();
+            $existing->touch();
+
+            // 1 - throw an exception to notify caller that link already been submitted
+            throw new CommunityLinkAlreadySubmitted;
+            // 2 - call method of caller object to notify that link has been submitted
+//            $caller->whenSpecialCircumstance();
+            // 3 - return a response object
+            // return new (object) ['status' => 'special_thing']
         }
 
 
