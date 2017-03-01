@@ -45,6 +45,16 @@ class CommunityLink extends Model
         return $link;
     }
 
+    public function scopeForChannel($builder, $channel)
+    {
+        if ($channel->id)
+        {
+            return $builder->where('channel_id', $channel->id);
+        }
+
+        return $builder;
+    }
+
     /**
      * Append attributes and contribute this link
      *

@@ -13,9 +13,16 @@ use App\Channel;
 
 class CommunityLinksController extends Controller
 {
-    public function index()
+    /**
+     * Display the main page of links and the form
+     *
+     * @param Channel|null $channel
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Channel $channel = null)
     {
-        $links = CommunityLink::where('approved', 1)
+        $links = CommunityLink::forChannel($channel)
+            ->where('approved', 1)
             ->latest('updated_at')
             ->paginate(3);
 
@@ -53,8 +60,9 @@ class CommunityLinksController extends Controller
      *
      * @param $channel
      */
-    public function filterChannel($channel)
-    {
-
-    }
+//    public function filterChannel($channel)
+//    {
+//        $channelId = Channel::where('slug', $channel)->get()->id;
+//        return $this->index($channelId);
+//    }
 }
