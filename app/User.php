@@ -4,6 +4,10 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ * @package App
+ */
 class User extends Authenticatable
 {
     /**
@@ -35,9 +39,16 @@ class User extends Authenticatable
         return !! $this->trusted;
     }
 
-    public function voteFor(CommunityLink $link)
+    /**
+     * Returns all the votes that this user has submitted
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function votes()
     {
-        $link->votes()->create(['user_id' => $this->id]);
+        return $this
+            ->belongsToMany(CommunityLink::class, 'community_links_votes')
+            ->withTimestamps();
     }
 
     /**

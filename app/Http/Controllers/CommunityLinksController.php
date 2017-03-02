@@ -52,15 +52,4 @@ class CommunityLinksController extends Controller
         }
         return back();
     }
-
-    /**
-     * Filters all community links by channel
-     *
-     * @param $channel
-     */
-//    public function filterChannel($channel)
-//    {
-//        $channelId = Channel::where('slug', $channel)->get()->id;
-//        return $this->index($channelId);
-//    }
 }
