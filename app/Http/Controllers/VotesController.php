@@ -18,11 +18,18 @@ class VotesController extends Controller
      */
     public function store(CommunityLink $link)
     {
-        CommunityLinkVote::firstOrNew([
-            'user_id' => auth()->id(),
-            'community_link_id' => $link->id
-        ])->toggle();
+        if (auth()->check())
+        {
+            CommunityLinkVote::firstOrNew([
+                'user_id' => auth()->id(),
+                'community_link_id' => $link->id
+            ])->toggle();
 
-        return back();
+            return back();
+        }
+        else
+        {
+            return view('auth.login');
+        }
     }
 }
