@@ -51,6 +51,14 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function toggleVoteFor($link)
+    {
+        CommunityLinkVote::firstOrNew([
+            'user_id' => $this->id,
+            'community_link_id' => $link->id
+        ])->toggle();
+    }
+
     /**
      * Tells if the given link has been voted on by this User
      *

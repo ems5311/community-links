@@ -10,6 +10,11 @@ use App\Http\Requests;
 
 class VotesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Upvote or downvote the given link
      *
@@ -18,18 +23,7 @@ class VotesController extends Controller
      */
     public function store(CommunityLink $link)
     {
-        if (auth()->check())
-        {
-            CommunityLinkVote::firstOrNew([
-                'user_id' => auth()->id(),
-                'community_link_id' => $link->id
-            ])->toggle();
-
-            return back();
-        }
-        else
-        {
-            return view('auth.login');
-        }
+        auth()->user()->toggleVoteFor($link);
+        return back();
     }
 }
