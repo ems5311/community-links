@@ -12,8 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/community');
 });
+
+//Route::get('/', 'CommunityLinksController@index');
 
 Route::auth();
 
